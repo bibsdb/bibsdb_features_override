@@ -1,0 +1,6 @@
+name = Bibsdb Features Override
+core = 7.x
+package = Bibsdb
+dependencies[] = ding_news
+dependencies[] = image
+dependencies[] = features_override
