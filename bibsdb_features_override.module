@@ -8,7 +8,9 @@
  * Implements hook_field_default_field_instances_alter().
  */
 function bibsdb_features_override_field_default_field_instances_alter(&$data) {
-  // Change the image style of the news title image in node view
+
+
+  // Change the image style of the news list image in search results
   if (isset($data['node-ding_news-field_ding_news_list_image'])) {
     $data['node-ding_news-field_ding_news_list_image']['display']['search_result']['settings']['styles']['breakpoint_1'] = 768; /* WAS: '' */
     $data['node-ding_news-field_ding_news_list_image']['display']['search_result']['settings']['styles']['breakpoint_2'] = 500; /* WAS: '' */
@@ -18,7 +20,19 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
     $data['node-ding_news-field_ding_news_list_image']['display']['search_result']['settings']['styles']['style_2'] = 'bibsdb_list_large'; /* WAS: '' */
   }
 
-  // Change the image style of the news list image in search results
+  // Change the image style of the event list image in search results
+  if (isset($data['node-ding_event-field_ding_event_list_image'])) {
+    $data['node-ding_event-field_ding_event_list_image']['display']['search_result']['settings']['image_link'] = 'content'; /* WAS: '' */
+    $data['node-ding_event-field_ding_event_list_image']['display']['search_result']['settings']['styles']['breakpoint_1'] = 768; /* WAS: '' */
+    $data['node-ding_event-field_ding_event_list_image']['display']['search_result']['settings']['styles']['breakpoint_2'] = 500; /* WAS: '' */
+    $data['node-ding_event-field_ding_event_list_image']['display']['search_result']['settings']['styles']['fallback_style'] = 'bibsdb_list_large'; /* WAS: '' */
+    $data['node-ding_event-field_ding_event_list_image']['display']['search_result']['settings']['styles']['max_style'] = 'bibsdb_list_large'; /* WAS: '' */
+    $data['node-ding_event-field_ding_event_list_image']['display']['search_result']['settings']['styles']['style_1'] = 'bibsdb_list_large'; /* WAS: '' */
+    $data['node-ding_event-field_ding_event_list_image']['display']['search_result']['settings']['styles']['style_2'] = 'bibsdb_list_large'; /* WAS: '' */
+  }
+
+  
+  // Change the image style of the news title image in node view
   if (isset($data['node-ding_news-field_ding_news_title_image'])) {
     $data['node-ding_news-field_ding_news_title_image']['display']['default']['settings']['styles']['fallback_style'] = 'bibsdb_expose_large'; /* WAS: 'ding_panorama_primary_large' */
     $data['node-ding_news-field_ding_news_title_image']['display']['default']['settings']['styles']['max_style'] = 'bibsdb_expose_large'; /* WAS: 'ding_panorama_primary_large' */
@@ -27,4 +41,17 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
   }
 }
 
+
+function bibsdb_features_override_strongarm_alter(&$data) {
+
+  // Make news content unpublished as default
+  if (isset($data['node_options_ding_news'])) {
+    unset($data['node_options_ding_news']->value[0]);
+  }
+
+  // Make event content unpublished and promoted as default
+  if (isset($data['node_options_ding_event'])) {
+    $data['node_options_ding_event']->value[0] = 'promote'; /* WAS: 'status' */
+  }
+}
 
