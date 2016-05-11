@@ -55,3 +55,34 @@ function bibsdb_features_override_strongarm_alter(&$data) {
   }
 }
 
+
+function bibsdb_features_override_default_page_manager_pages_alter(&$data) {
+  if (isset($data['ding_events'])) {
+    $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->content['new-5d683c57-a79e-4d16-9046-d2dc04a557d5']->position = 3; /* WAS: 2 */
+    $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->content['new-fc70425c-d883-42de-87da-ccf4782400e3'] = (object) array(
+          'pid' => 'new-fc70425c-d883-42de-87da-ccf4782400e3',
+          'panel' => 'main_content',
+          'type' => 'views_panes',
+          'subtype' => 'bibsdb_wall-panel_bibsdb_wall',
+          'shown' => TRUE,
+          'access' => array(),
+          'configuration' => array(
+            'arguments' => array(
+              'field_bibsdb_wall_tid' => 176,
+            ),
+          ),
+          'cache' => array(),
+          'style' => array(
+            'settings' => NULL,
+          ),
+          'css' => array(),
+          'extras' => array(),
+          'position' => 2,
+          'locks' => array(),
+          'uuid' => 'fc70425c-d883-42de-87da-ccf4782400e3',
+        ); /* WAS: '' */
+    $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->panels['main_content'][2] = 'new-fc70425c-d883-42de-87da-ccf4782400e3'; /* WAS: 'new-5d683c57-a79e-4d16-9046-d2dc04a557d5' */
+    $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->panels['main_content'][3] = 'new-5d683c57-a79e-4d16-9046-d2dc04a557d5'; /* WAS: '' */
+  }
+}
+
