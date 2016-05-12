@@ -68,7 +68,7 @@ function bibsdb_features_override_default_page_manager_pages_alter(&$data) {
           'access' => array(),
           'configuration' => array(
             'arguments' => array(
-              'field_bibsdb_wall_tid' => 176,
+              'field_bibsdb_wall_tid' => 178,
             ),
           ),
           'cache' => array(),
