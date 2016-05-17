@@ -4,6 +4,16 @@
  * Code that overrides the DDBCMS feautures.
  */
 
+
+/**
+ * Implements hook_ctools_plugin_api().
+ */
+function pathautotest_ctools_plugin_api($module = NULL, $api = NULL) {
+  if ($module == "strongarm" && $api == "strongarm") {
+    return array("version" => "1");
+  }
+}
+
 /**
  * Implements hook_field_default_field_instances_alter().
  */
@@ -31,6 +41,17 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
     $data['node-ding_event-field_ding_event_list_image']['display']['search_result']['settings']['styles']['style_2'] = 'bibsdb_list_large'; /* WAS: '' */
   }
 
+  // Change the image style of the page list image in search results
+  if (isset($data['node-ding_page-field_ding_page_list_image'])) {
+    $data['node-ding_page-field_ding_page_list_image']['display']['search_result']['settings']['image_link'] = 'content'; /* WAS: '' */
+    $data['node-ding_page-field_ding_page_list_image']['display']['search_result']['settings']['styles']['breakpoint_1'] = 768; /* WAS: '' */
+    $data['node-ding_page-field_ding_page_list_image']['display']['search_result']['settings']['styles']['breakpoint_2'] = 500; /* WAS: '' */
+    $data['node-ding_page-field_ding_page_list_image']['display']['search_result']['settings']['styles']['fallback_style'] = 'bibsdb_list_large'; /* WAS: '' */
+    $data['node-ding_page-field_ding_page_list_image']['display']['search_result']['settings']['styles']['max_style'] = 'bibsdb_list_large'; /* WAS: '' */
+    $data['node-ding_page-field_ding_page_list_image']['display']['search_result']['settings']['styles']['style_1'] = 'bibsdb_list_large'; /* WAS: '' */
+    $data['node-ding_page-field_ding_page_list_image']['display']['search_result']['settings']['styles']['style_2'] = 'bibsdb_list_large'; /* WAS: '' */
+  }
+
   
   // Change the image style of the news title image in node view
   if (isset($data['node-ding_news-field_ding_news_title_image'])) {
@@ -44,6 +65,10 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
 
 function bibsdb_features_override_strongarm_alter(&$data) {
 
+
+  // Make default state unpublished
+
+
   // Make news content unpublished as default
   if (isset($data['node_options_ding_news'])) {
     unset($data['node_options_ding_news']->value[0]);
@@ -53,34 +78,116 @@ function bibsdb_features_override_strongarm_alter(&$data) {
   if (isset($data['node_options_ding_event'])) {
     $data['node_options_ding_event']->value[0] = 'promote'; /* WAS: 'status' */
   }
+
+  // Make page content unpublished and promoted as default
+  if (isset($data['node_options_ding_page'])) {
+    unset($data['node_options_ding_page']->value[0]);
+  }
+
+  // Path auto patterns
+
+  // Page pattern
+  if (isset($data['pathauto_node_ding_page_pattern'])) {
+    $data['pathauto_node_ding_page_pattern']->value = 'indhold/[node:title]'; /* WAS: '[node:menu-link:parent:url:relative]/[node:menu-link:title]' */
+  }
+
+  // Webform pattern
+  if (isset($data['pathauto_node_webform_pattern'])) {
+    $data['pathauto_node_webform_pattern']->value = '[node:title]'; 
+  }
+
+
+  // Inactivity limit has been lowered from 15 min to 10 min.
+  if (isset($data['autologout_role_8_timeout'])) {
+    $data['autologout_role_8_timeout']->value = 600; /* WAS: 900 */
+  }
+  // ...and that must be reflected in message.
+  if (isset($data['autologout_inactivity_message'])) {
+    $data['autologout_inactivity_message']->value = 'Af sikkerhedsmæssige årsager er du blevet logget ud, da du har været inaktiv de seneste 10 minutter
+    
+    '; /* WAS: 'Af sikkerhedsmæssige årsager er du blevet logget ud, da du har været inaktiv de seneste 15 minutter
+    
+    ' */
+  }
+
+  // Change Library User Role ind Ding Varnish from authenticated user to guest blogger to prevet caching of content after login.
+  // This is to solve the problem that you can't search right after login.
+  if (isset($data['ding_varnish_role'])) {
+    $data['ding_varnish_role']->value = 5; /* WAS: 2 */
+  }
 }
 
+/**
+ * Theme setting on contact form -  set to bibsdb.
+ * Implements hook_default_fe_block_settings_alter().
+ * 
+ */
+function bibsdb_features_override_default_fe_block_settings_alter(&$data) {
+  if (isset($data['formblock-contact_site'])) {
+    $data['formblock-contact_site']['themes']['bibsdb'] = array(
+      'region' => '',
+      'status' => 0,
+      'theme' => 'bibsdb',
+      'weight' => 0,
+      ); /* WAS: '' */
+  }
+}
+
+/**
+ * Footer menu headers overridden
+ * Implements hook_menu_default_menu_custom_alter().
+ */
+function bibsdb_features_override_menu_default_menu_custom_alter(&$data) {
+  if (isset($data['menu-footer-menu-1'])) {
+    $data['menu-footer-menu-1']['title'] = 'Inspiration'; /* WAS: 'Footer menu 1' */
+  }
+  if (isset($data['menu-footer-menu-2'])) {
+    $data['menu-footer-menu-2']['title'] = 'Tilbud'; /* WAS: 'Footer menu 2' */
+  }
+  if (isset($data['menu-footer-menu-3'])) {
+    $data['menu-footer-menu-3']['title'] = 'Sådan gør du'; /* WAS: 'Footer menu 3' */
+  }
+  if (isset($data['menu-footer-menu-4'])) {
+    $data['menu-footer-menu-4']['title'] = 'Information'; /* WAS: 'Footer menu 4' */
+  }
+}
+
+
+/**
+ * Read Circuit Set nodes made searchable.
+ * Implements hook_views_default_views_alter().
+ */
+function bibsdb_frontend_views_default_views_alter(&$data) {
+  if (isset($data['ding_node_search'])) {
+    $data['ding_node_search']->display['default']->display_options['filters']['type']['value']['read_circuit_set'] = 'read_circuit_set'; /* WAS: '' */
+  }
+}
 
 function bibsdb_features_override_default_page_manager_pages_alter(&$data) {
   if (isset($data['ding_events'])) {
     $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->content['new-5d683c57-a79e-4d16-9046-d2dc04a557d5']->position = 3; /* WAS: 2 */
     $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->content['new-fc70425c-d883-42de-87da-ccf4782400e3'] = (object) array(
-          'pid' => 'new-fc70425c-d883-42de-87da-ccf4782400e3',
-          'panel' => 'main_content',
-          'type' => 'views_panes',
-          'subtype' => 'bibsdb_wall-panel_bibsdb_wall',
-          'shown' => TRUE,
-          'access' => array(),
-          'configuration' => array(
-            'arguments' => array(
-              'field_bibsdb_wall_tid' => 178,
-            ),
+      'pid' => 'new-fc70425c-d883-42de-87da-ccf4782400e3',
+      'panel' => 'main_content',
+      'type' => 'views_panes',
+      'subtype' => 'bibsdb_wall-panel_bibsdb_wall',
+      'shown' => TRUE,
+      'access' => array(),
+      'configuration' => array(
+        'arguments' => array(
+          'field_bibsdb_wall_tid' => 178,
           ),
-          'cache' => array(),
-          'style' => array(
-            'settings' => NULL,
-          ),
-          'css' => array(),
-          'extras' => array(),
-          'position' => 2,
-          'locks' => array(),
-          'uuid' => 'fc70425c-d883-42de-87da-ccf4782400e3',
-        ); /* WAS: '' */
+        ),
+      'cache' => array(),
+      'style' => array(
+        'settings' => NULL,
+        ),
+      'css' => array(),
+      'extras' => array(),
+      'position' => 2,
+      'locks' => array(),
+      'uuid' => 'fc70425c-d883-42de-87da-ccf4782400e3',
+      ); /* WAS: '' */
     $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->panels['main_content'][2] = 'new-fc70425c-d883-42de-87da-ccf4782400e3'; /* WAS: 'new-5d683c57-a79e-4d16-9046-d2dc04a557d5' */
     $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->panels['main_content'][3] = 'new-5d683c57-a79e-4d16-9046-d2dc04a557d5'; /* WAS: '' */
   }
