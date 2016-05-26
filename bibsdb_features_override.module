@@ -60,6 +60,14 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
     $data['node-ding_news-field_ding_news_title_image']['display']['default']['settings']['styles']['style_1'] = 'ding_primary_small'; /* WAS: 'ding_panorama_primary_medium' */
     $data['node-ding_news-field_ding_news_title_image']['display']['default']['settings']['styles']['style_2'] = 'ding_primary_small'; /* WAS: 'ding_panorama_primary_small' */
   }
+
+  // Make lead and body on ding_page not required.
+  if (isset($data['node-ding_page-field_ding_page_body'])) {
+    $data['node-ding_page-field_ding_page_body']['required'] = 0; /* WAS: 1 */
+  }
+  if (isset($data['node-ding_page-field_ding_page_lead'])) {
+    $data['node-ding_page-field_ding_page_lead']['required'] = 0; /* WAS: 1 */
+  }
 }
 
 
