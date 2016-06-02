@@ -104,6 +104,11 @@ function bibsdb_features_override_strongarm_alter(&$data) {
     $data['pathauto_node_webform_pattern']->value = '[node:title]'; 
   }
 
+    // New materials pattern
+  if (isset($data['pathauto_node_new_materials_pattern'])) {
+    $data['pathauto_node_new_materials_pattern']->value = 'nye-udgivelser/[node:title]'; 
+  }
+
 
   // Inactivity limit has been lowered from 15 min to 10 min.
   if (isset($data['autologout_role_8_timeout'])) {
