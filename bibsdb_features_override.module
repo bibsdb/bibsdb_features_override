@@ -71,6 +71,8 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
 
   // Change widgit of ding_search_context_link-field from Link to Advanced Link.
   if (isset($data['node-ding_search_context_link-field_search_context_link'])) {
+    $data['node-ding_search_context_link-field_search_context_link']['description'] = '<b>Intern url:</b> Begynd at taste titlen og vælg fra listen.<br>
+    <b>Ekstern url:</b> Skal starte med http:// https:// eller mailto://'; /* WAS: 'Requires af valid url. Either "http:// .." or "/foo/bar..". System urls "node/10.." are not valid' */
     $data['node-ding_search_context_link-field_search_context_link']['widget']['active'] = 1; /* WAS: 0 */
     $data['node-ding_search_context_link-field_search_context_link']['widget']['module'] = 'advanced_link'; /* WAS: 'link' */
     $data['node-ding_search_context_link-field_search_context_link']['widget']['settings']['default_titles'] = ''; /* WAS: '' */
