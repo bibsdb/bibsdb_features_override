@@ -69,10 +69,6 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
     $data['node-ding_page-field_ding_page_lead']['required'] = 0; /* WAS: 1 */
   }
 
-  // Make field_search_context_link on ding_search_context_link not required.
-  if (isset($data['node-ding_search_context_link-field_search_context_link'])) {
-    $data['node-ding_search_context_link-field_search_context_link']['required'] = 0; /* WAS: 1 */ 
-  }
 }
 
 
