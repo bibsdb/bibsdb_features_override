@@ -109,11 +109,20 @@ function bibsdb_features_override_strongarm_alter(&$data) {
     $data['pathauto_node_webform_pattern']->value = '[node:title]'; 
   }
 
-    // New materials pattern
+  // New materials pattern
   if (isset($data['pathauto_node_new_materials_pattern'])) {
     $data['pathauto_node_new_materials_pattern']->value = 'nye-udgivelser/[node:title]'; 
   }
 
+  // E-resource pattern
+  if (isset($data['pathauto_node_ding_eresource_pattern'])) {
+    $data['pathauto_node_ding_eresource_pattern']->value = 'indhold/[node:title]'; 
+  }
+
+   // Ding_search_context_link pattern
+  if (isset($data['pathauto_node_ding_search_context_link_pattern'])) {
+    $data['pathauto_node_ding_search_context_link_pattern']->value = 'indhold/[node:title]'; 
+  }
 
   // Inactivity limit has been lowered from 15 min to 10 min.
   if (isset($data['autologout_role_8_timeout'])) {
