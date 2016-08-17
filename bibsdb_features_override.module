@@ -87,6 +87,11 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
     $data['node-ding_search_context_link-field_search_context_link']['widget']['type'] = 'advanced_link'; /* WAS: 'link_field' */
   }
 
+  // Change the default number og covers shown on new_materials page
+  if (isset($data['node-new_materials-field_ting_new_materials_items'])) {
+    $data['node-new_materials-field_ting_new_materials_items']['default_value'][0]['value'] = 25; /* WAS: 10 */
+  }
+
 }
 
 
