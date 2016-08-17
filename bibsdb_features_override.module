@@ -89,7 +89,7 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
 
   // Change the default number og covers shown on new_materials page
   if (isset($data['node-new_materials-field_ting_new_materials_items'])) {
-    $data['node-new_materials-field_ting_new_materials_items']['default_value'][0]['value'] = 25; /* WAS: 10 */
+    $data['node-new_materials-field_ting_new_materials_items']['default_value'][0]['value'] = 20; /* WAS: 10 */
   }
 
 }
