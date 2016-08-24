@@ -69,23 +69,18 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
     $data['node-ding_page-field_ding_page_lead']['required'] = 0; /* WAS: 1 */
   }
 
-  // Change widgit of ding_search_context_link-field from Link to Advanced Link.
-  if (isset($data['node-ding_search_context_link-field_search_context_link'])) {
-    $data['node-ding_search_context_link-field_search_context_link']['description'] = '<b>Intern url:</b> Begynd at taste titlen og vælg fra listen.<br>
-    <b>Ekstern url:</b> Skal starte med http:// https:// eller mailto://'; /* WAS: 'Requires af valid url. Either "http:// .." or "/foo/bar..". System urls "node/10.." are not valid' */
-    $data['node-ding_search_context_link-field_search_context_link']['widget']['active'] = 1; /* WAS: 0 */
-    $data['node-ding_search_context_link-field_search_context_link']['widget']['module'] = 'advanced_link'; /* WAS: 'link' */
-    $data['node-ding_search_context_link-field_search_context_link']['widget']['settings']['default_titles'] = ''; /* WAS: '' */
-    $data['node-ding_search_context_link-field_search_context_link']['widget']['settings']['urls_allowed'] = 'both'; /* WAS: '' */
-    $data['node-ding_search_context_link-field_search_context_link']['widget']['settings']['urls_filter'] = 'indhold/*
-    nye-udgivelser/*
-    nyheder/*
-    arrangementer/*
-    temaer/*
-    menukort'; /* WAS: '' */
-    $data['node-ding_search_context_link-field_search_context_link']['widget']['settings']['urls_search'] = 'contains'; /* WAS: '' */
-    $data['node-ding_search_context_link-field_search_context_link']['widget']['type'] = 'advanced_link'; /* WAS: 'link_field' */
+  
+  if (isset($data['node-ding_search_context_link-field_search_context_list_image'])) {
+
+    // Make list image on ding_search_context_link not required
+    $data['node-ding_search_context_link-field_search_context_list_image']['required'] = 0; /* WAS: 1 */
+
+    // Move fields on ding_search_context_link edit form
+    $data['node-ding_search_context_link-field_search_context_list_image']['widget']['weight'] = 4; /* WAS: 32 */
   }
+
+
+
 
   // Change the default number og covers shown on new_materials page
   if (isset($data['node-new_materials-field_ting_new_materials_items'])) {
