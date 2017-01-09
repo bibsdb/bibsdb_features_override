@@ -79,13 +79,20 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
     $data['node-ding_search_context_link-field_search_context_list_image']['widget']['weight'] = 4; /* WAS: 32 */
   }
 
-
-
-
   // Change the default number og covers shown on new_materials page
   if (isset($data['node-new_materials-field_ting_new_materials_items'])) {
     $data['node-new_materials-field_ting_new_materials_items']['default_value'][0]['value'] = 20; /* WAS: 10 */
   }
+
+  // Change the allowed number of categories on event from 1 to 4
+  if (isset($data['field_ding_event_category'])) {
+    $data['field_ding_event_category']['cardinality'] = 4; /* WAS: 1 */
+  }
+
+  // Change event category widgit from select box to chack boxes
+  if (isset($data['node-ding_event-field_ding_event_category'])) {
+   $data['node-ding_event-field_ding_event_category']['widget']['type'] = 'options_buttons'; /* WAS: 'options_select' */
+ }
 
 }
 
@@ -194,36 +201,6 @@ function bibsdb_features_override_views_default_views_alter(&$data) {
     $data['ding_node_search']->display['default']->display_options['filters']['type']['value']['ding_search_context_link'] = 'ding_search_context_link'; /* WAS: '' */
     $data['ding_node_search']->display['default']->display_options['filters']['type']['value']['bibsdb_link_collection'] = 'bibsdb_link_collection'; /* WAS: '' */
     $data['ding_node_search']->display['default']->display_options['filters']['type']['value']['read_circuit_set'] = 'read_circuit_set'; /* WAS: '' */
-  }
-}
-
-function bibsdb_features_override_default_page_manager_pages_alter(&$data) {
-  if (isset($data['ding_events'])) {
-    $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->content['new-5d683c57-a79e-4d16-9046-d2dc04a557d5']->position = 3; /* WAS: 2 */
-    $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->content['new-fc70425c-d883-42de-87da-ccf4782400e3'] = (object) array(
-      'pid' => 'new-fc70425c-d883-42de-87da-ccf4782400e3',
-      'panel' => 'main_content',
-      'type' => 'views_panes',
-      'subtype' => 'bibsdb_wall-panel_bibsdb_wall',
-      'shown' => TRUE,
-      'access' => array(),
-      'configuration' => array(
-        'arguments' => array(
-          'field_bibsdb_wall_tid' => 178,
-          ),
-        ),
-      'cache' => array(),
-      'style' => array(
-        'settings' => NULL,
-        ),
-      'css' => array(),
-      'extras' => array(),
-      'position' => 2,
-      'locks' => array(),
-      'uuid' => 'fc70425c-d883-42de-87da-ccf4782400e3',
-      ); /* WAS: '' */
-    $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->panels['main_content'][2] = 'new-fc70425c-d883-42de-87da-ccf4782400e3'; /* WAS: 'new-5d683c57-a79e-4d16-9046-d2dc04a557d5' */
-    $data['ding_events']->default_handlers['page_ding_events_panel_context']->conf['display']->panels['main_content'][3] = 'new-5d683c57-a79e-4d16-9046-d2dc04a557d5'; /* WAS: '' */
   }
 }
 
