@@ -19,7 +19,7 @@ function pathautotest_ctools_plugin_api($module = NULL, $api = NULL) {
  */
 function bibsdb_features_override_field_default_field_bases_alter(&$data) {
   if (isset($data['field_ding_event_category'])) {
-    $data['field_ding_event_category']['cardinality'] = 4; /* WAS: 1 */
+    $data['field_ding_event_category']['cardinality'] = 5; /* WAS: 1 */
   }
 }
 
