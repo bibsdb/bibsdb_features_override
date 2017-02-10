@@ -21,6 +21,10 @@ function bibsdb_features_override_field_default_field_bases_alter(&$data) {
   if (isset($data['field_ding_event_category'])) {
     $data['field_ding_event_category']['cardinality'] = 5; /* WAS: 1 */
   }
+  if (isset($data['field_ting_new_materials_search'])) {
+    $data['field_ting_new_materials_search']['type'] = 'text_long'; /* WAS: 'text' */
+    unset($data['field_ting_new_materials_search']['settings']['max_length']);
+  }
 }
 
 /**
