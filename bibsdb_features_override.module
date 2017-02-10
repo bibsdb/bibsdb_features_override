@@ -206,6 +206,7 @@ function bibsdb_features_override_menu_default_menu_custom_alter(&$data) {
 
 /**
  * Nodes made not searchable.
+ * Sort order of news list in groups changed to publication date from created date.
  * Implements hook_views_default_views_alter().
  */
 function bibsdb_features_override_views_default_views_alter(&$data) {
@@ -213,6 +214,76 @@ function bibsdb_features_override_views_default_views_alter(&$data) {
     $data['ding_node_search']->display['default']->display_options['filters']['type']['value']['ding_search_context_link'] = 'ding_search_context_link'; /* WAS: '' */
     $data['ding_node_search']->display['default']->display_options['filters']['type']['value']['read_circuit_set'] = 'read_circuit_set'; /* WAS: '' */
   }
+
+  if (isset($data['ding_news'])) {
+
+    // Change sort order of all news views
+    $data['ding_news']->display['default']->display_options['sorts']['published_at'] = array(
+      'id' => 'published_at',
+      'table' => 'publication_date',
+      'field' => 'published_at',
+      'order' => 'DESC',
+    );
+    unset($data['ding_news']->display['default']->display_options['sorts']['created']);
+
+    // Display the published date instead of the created date in news lists on groups
+    $data['ding_news']->display['ding_news_groups_list']->display_options['fields']['created'] = array(
+      'id' => 'published_at',
+      'table' => 'publication_date',
+      'field' => 'published_at',
+      'ui_name' => 'Date',
+      'label' => '',
+      'element_type' => 'span',
+      'element_class' => 'news-date',
+      'element_label_colon' => FALSE,
+      'element_default_classes' => FALSE,
+      'date_format' => 'ding_long_date_only',
+      'second_date_format' => 'ding_date_only',
+    );
+
+    // Change sort order of news on frontpage
+    $data['ding_news']->display['ding_news_frontpage_list']->display_options['sorts']['published_at'] = array(
+      'id' => 'published_at',
+      'table' => 'publication_date',
+      'field' => 'published_at',
+      'order' => 'DESC',
+    );
+    unset($data['ding_news']->display['ding_news_frontpage_list']->display_options['sorts']['created']);
+
+    // Display the published date instead of the created date on frontpage
+    $data['ding_news']->display['ding_news_frontpage_list']->display_options['fields']['created'] = array(
+      'id' => 'published_at',
+      'table' => 'publication_date',
+      'field' => 'published_at',
+      'ui_name' => 'Date',
+      'label' => '',
+      'element_type' => 'span',
+      'element_class' => 'news-date',
+      'element_label_colon' => FALSE,
+      'element_default_classes' => FALSE,
+      'date_format' => 'ding_long_date_only',
+      'second_date_format' => 'ding_date_only',
+    );
+
+    // Display the published date instead of the created date on the main news list
+    $data['ding_news']->display['ding_news_list']->display_options['fields']['created'] = array(
+      'id' => 'published_at',
+      'table' => 'publication_date',
+      'field' => 'published_at',
+      'ui_name' => 'Date',
+      'label' => '',
+      'element_type' => 'span',
+      'element_class' => 'news-date',
+      'element_label_colon' => FALSE,
+      'element_wrapper_type' => 0,
+      'element_default_classes' => FALSE,
+      'date_format' => 'ding_long_date_only',
+      'second_date_format' => 'ding_date_only',
+    );
+   
+  }
+
+
 }
 
 
