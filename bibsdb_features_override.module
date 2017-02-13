@@ -97,6 +97,11 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
     $data['node-new_materials-field_ting_new_materials_items']['default_value'][0]['value'] = 20; /* WAS: 10 */
   }
 
+  // Change the widget for field_ting_new_materials_search
+  if (isset($data['node-new_materials-field_ting_new_materials_search'])) {
+    $data['node-new_materials-field_ting_new_materials_search']['widget']['settings']['rows'] = 5; /* WAS: '' */
+    $data['node-new_materials-field_ting_new_materials_search']['widget']['type'] = 'text_textarea'; /* WAS: 'text_textfield' */
+  }
 
 
   // Change event category widgit from select box to chack boxes
@@ -227,7 +232,7 @@ function bibsdb_features_override_views_default_views_alter(&$data) {
       'table' => 'publication_date',
       'field' => 'published_at',
       'order' => 'DESC',
-    );
+      );
     unset($data['ding_news']->display['default']->display_options['sorts']['created']);
 
     // Display the published date instead of the created date in news lists on groups
@@ -243,7 +248,7 @@ function bibsdb_features_override_views_default_views_alter(&$data) {
       'element_default_classes' => FALSE,
       'date_format' => 'ding_long_date_only',
       'second_date_format' => 'ding_date_only',
-    );
+      );
 
     // Change sort order of news on frontpage
     $data['ding_news']->display['ding_news_frontpage_list']->display_options['sorts']['published_at'] = array(
@@ -251,7 +256,7 @@ function bibsdb_features_override_views_default_views_alter(&$data) {
       'table' => 'publication_date',
       'field' => 'published_at',
       'order' => 'DESC',
-    );
+      );
     unset($data['ding_news']->display['ding_news_frontpage_list']->display_options['sorts']['created']);
 
     // Display the published date instead of the created date on frontpage
@@ -267,7 +272,7 @@ function bibsdb_features_override_views_default_views_alter(&$data) {
       'element_default_classes' => FALSE,
       'date_format' => 'ding_long_date_only',
       'second_date_format' => 'ding_date_only',
-    );
+      );
 
     // Display the published date instead of the created date on the main news list
     $data['ding_news']->display['ding_news_list']->display_options['fields']['created'] = array(
@@ -283,8 +288,8 @@ function bibsdb_features_override_views_default_views_alter(&$data) {
       'element_default_classes' => FALSE,
       'date_format' => 'ding_long_date_only',
       'second_date_format' => 'ding_date_only',
-    );
-   
+      );
+    
   }
 
 
