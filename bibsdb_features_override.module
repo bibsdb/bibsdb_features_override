@@ -80,6 +80,13 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
   }
   if (isset($data['node-ding_page-field_ding_page_lead'])) {
     $data['node-ding_page-field_ding_page_lead']['required'] = 0; /* WAS: 1 */
+
+  }
+  if (isset($data['node-ding_group-field_ding_group_body'])) {
+    $data['node-ding_group-field_ding_group_body']['required'] = 0; /* WAS: 1 */
+  }
+  if (isset($data['node-ding_group-field_ding_group_lead'])) {
+    $data['node-ding_group-field_ding_group_lead']['required'] = 0; /* WAS: 1 */
   }
 
   
