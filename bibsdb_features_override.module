@@ -19,7 +19,7 @@ function pathautotest_ctools_plugin_api($module = NULL, $api = NULL) {
  */
 function bibsdb_features_override_field_default_field_bases_alter(&$data) {
   if (isset($data['field_ding_event_category'])) {
-    $data['field_ding_event_category']['cardinality'] = 5; /* WAS: 1 */
+    $data['field_ding_event_category']['cardinality'] = 7; /* WAS: 1 */
   }
   if (isset($data['field_ting_new_materials_search'])) {
     $data['field_ting_new_materials_search']['type'] = 'text_long'; /* WAS: 'text' */
@@ -87,6 +87,19 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
   }
   if (isset($data['node-ding_group-field_ding_group_lead'])) {
     $data['node-ding_group-field_ding_group_lead']['required'] = 0; /* WAS: 1 */
+  }
+
+  if (isset($data['node-ding_group-field_ding_group_lead'])) {
+    $data['node-ding_group-field_ding_group_lead']['required'] = 0; /* WAS: 1 */
+  }
+
+  if (isset($data['node-ding_group-field_ding_group_lead'])) {
+    $data['node-ding_group-field_ding_group_lead']['required'] = 0; /* WAS: 1 */
+  }
+
+  // Make group selection on events required. Choose between "Børn" and "Voksen"
+  if (isset($data['ding_event_groups_ref'])) {
+    $data['ding_event_groups_ref']['required'] = 1; /* WAS: 0 */
   }
 
   
