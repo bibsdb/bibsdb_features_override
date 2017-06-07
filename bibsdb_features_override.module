@@ -98,8 +98,8 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
   }
 
   // Make group selection on events required. Choose between "Børn" and "Voksen"
-  if (isset($data['ding_event_groups_ref'])) {
-    $data['ding_event_groups_ref']['required'] = 1; /* WAS: 0 */
+  if (isset($data['node-ding_event-ding_event_groups_ref'])) {
+    $data['node-ding_event-ding_event_groups_ref']['required'] = 1; /* WAS: 0 */
   }
 
   
