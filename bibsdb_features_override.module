@@ -127,7 +127,13 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
   // Change event category widgit from select box to chack boxes
   if (isset($data['node-ding_event-field_ding_event_category'])) {
    $data['node-ding_event-field_ding_event_category']['widget']['type'] = 'options_buttons'; /* WAS: 'options_select' */
+  }
+
+  // Set ding_event_lead description to display char counter
+ if (isset($data['node-ding_event-field_ding_event_lead'])) {
+   $data['node-ding_event-field_ding_event_lead']['description'] = '0 ud af 255 tegn'; /* WAS: '' */
  }
+ 
 
 }
 
