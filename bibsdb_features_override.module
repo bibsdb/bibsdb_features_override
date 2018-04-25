@@ -239,6 +239,11 @@ function bibsdb_features_override_views_default_views_alter(&$data) {
       );
 
 
+    // ding_staff
+
+    // Don't use pager -display all items
+    $data['ding_staff']->display['default']->display_options['pager']['type'] = 'none'; /* WAS: 'full' */
+    $data['ding_staff']->display['default']->display_options['pager']['options']['offset'] = 0; /* WAS: '' */
     // Make department required to avoid people in the beginning of the list not gruoped by apartment.
     $data['ding_staff']->display['ding_staff_library_departments']->display_options['relationships']['field_ding_staff_department_tid']['required'] = TRUE; /* WAS: '' */
     
