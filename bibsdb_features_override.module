@@ -117,6 +117,12 @@ function bibsdb_features_override_strongarm_alter(&$data) {
     unset($data['node_options_ding_page']->value[0]);
   }
 
+
+  // Change the default event date format
+  if (isset($data['date_format_ding_date_only_version2'])) {
+    $data['date_format_ding_date_only_version2']->value = 'd. M Y'; /* WAS: 'd.m.y' */
+  }
+
   // Path auto patterns
 
   // Page pattern
