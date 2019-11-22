@@ -21,6 +21,9 @@ function bibsdb_features_override_field_default_field_bases_alter(&$data) {
   if (isset($data['field_ding_event_category'])) {
     $data['field_ding_event_category']['cardinality'] = 7; /* WAS: 1 */
   }
+  if (isset($data['field_ding_event_target'])) {
+    $data['field_ding_event_target']['cardinality'] = 4; /* WAS: 1 */
+  }
   if (isset($data['field_ting_new_materials_search'])) {
     $data['field_ting_new_materials_search']['type'] = 'text_long'; /* WAS: 'text' */
     unset($data['field_ting_new_materials_search']['settings']['max_length']);
@@ -85,6 +88,11 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
   // Change event category widgit from select box to chack boxes
   if (isset($data['node-ding_event-field_ding_event_category'])) {
    $data['node-ding_event-field_ding_event_category']['widget']['type'] = 'options_buttons'; /* WAS: 'options_select' */
+  }
+
+  // Change event target widgit from select box to check boxes
+  if (isset($data['node-ding_event-field_ding_event_target'])) {
+    $data['node-ding_event-field_ding_event_target']['widget']['type'] = 'options_buttons'; /* WAS: 'options_select' */
   }
 
   // Set ding_event_lead description to display char counter
