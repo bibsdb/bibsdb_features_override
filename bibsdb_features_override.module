@@ -128,7 +128,7 @@ function bibsdb_features_override_strongarm_alter(&$data) {
 
   // Change the default event date format
   if (isset($data['date_format_ding_date_only_version2'])) {
-    $data['date_format_ding_date_only_version2']->value = 'j. m Y'; /* WAS: 'd.m.y' */
+    $data['date_format_ding_date_only_version2']->value = 'j. F Y'; /* WAS: 'd.m.y' */
   }
 
   // Path auto patterns
