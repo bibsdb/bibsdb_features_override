@@ -24,10 +24,6 @@ function bibsdb_features_override_field_default_field_bases_alter(&$data) {
   if (isset($data['field_ding_event_target'])) {
     $data['field_ding_event_target']['cardinality'] = 4; /* WAS: 1 */
   }
-  if (isset($data['field_ting_new_materials_search'])) {
-    $data['field_ting_new_materials_search']['type'] = 'text_long'; /* WAS: 'text' */
-    unset($data['field_ting_new_materials_search']['settings']['max_length']);
-  }
 }
 
 /**
@@ -63,28 +59,6 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
     $data['node-ding_event-ding_event_groups_ref']['required'] = 1; /* WAS: 0 */
   }
 
-  
-  if (isset($data['node-ding_search_context_link-field_search_context_list_image'])) {
-
-    // Make list image on ding_search_context_link not required
-    $data['node-ding_search_context_link-field_search_context_list_image']['required'] = 0; /* WAS: 1 */
-
-    // Move fields on ding_search_context_link edit form
-    $data['node-ding_search_context_link-field_search_context_list_image']['widget']['weight'] = 4; /* WAS: 32 */
-  }
-
-  // Change the default number og covers shown on new_materials page
-  if (isset($data['node-new_materials-field_ting_new_materials_items'])) {
-    $data['node-new_materials-field_ting_new_materials_items']['default_value'][0]['value'] = 20; /* WAS: 10 */
-  }
-
-  // Change the widget for field_ting_new_materials_search
-  if (isset($data['node-new_materials-field_ting_new_materials_search'])) {
-    $data['node-new_materials-field_ting_new_materials_search']['widget']['settings']['rows'] = 5; /* WAS: '' */
-    $data['node-new_materials-field_ting_new_materials_search']['widget']['type'] = 'text_textarea'; /* WAS: 'text_textfield' */
-  }
-
-
   // Change event category widgit from select box to chack boxes
   if (isset($data['node-ding_event-field_ding_event_category'])) {
    $data['node-ding_event-field_ding_event_category']['widget']['type'] = 'options_buttons'; /* WAS: 'options_select' */
@@ -96,11 +70,9 @@ function bibsdb_features_override_field_default_field_instances_alter(&$data) {
   }
 
   // Set ding_event_lead description to display char counter
- if (isset($data['node-ding_event-field_ding_event_lead'])) {
+  if (isset($data['node-ding_event-field_ding_event_lead'])) {
    $data['node-ding_event-field_ding_event_lead']['description'] = '0 ud af 255 tegn'; /* WAS: '' */
- }
- 
-
+  }
 }
 
 
@@ -125,7 +97,6 @@ function bibsdb_features_override_strongarm_alter(&$data) {
     unset($data['node_options_ding_page']->value[0]);
   }
 
-
   // Change the default event date format
   if (isset($data['date_format_ding_date_only_version2'])) {
     $data['date_format_ding_date_only_version2']->value = 'j. F Y'; /* WAS: 'd.m.y' */
@@ -143,35 +114,9 @@ function bibsdb_features_override_strongarm_alter(&$data) {
     $data['pathauto_node_webform_pattern']->value = '[node:title]'; 
   }
 
-  // New materials pattern
-  if (isset($data['pathauto_node_new_materials_pattern'])) {
-    $data['pathauto_node_new_materials_pattern']->value = 'nye-udgivelser/[node:title]'; 
-  }
-
   // Event pattern
   if (isset($data['pathauto_node_ding_event_pattern'])) {
     $data['pathauto_node_ding_event_pattern']->value = 'arrangementer/[node:field-ding-event-category:1]/[node:title]'; 
-  }
-
-
-
-  // Inactivity limit has been lowered from 15 min to 10 min.
-  if (isset($data['autologout_role_8_timeout'])) {
-    $data['autologout_role_8_timeout']->value = 600; /* WAS: 900 */
-  }
-  // ...and that must be reflected in message.
-  if (isset($data['autologout_inactivity_message'])) {
-    $data['autologout_inactivity_message']->value = 'Af sikkerhedsmæssige årsager er du blevet logget ud, da du har været inaktiv de seneste 10 minutter
-    
-    '; /* WAS: 'Af sikkerhedsmæssige årsager er du blevet logget ud, da du har været inaktiv de seneste 15 minutter
-    
-    ' */
-  }
-
-  // Change Library User Role ind Ding Varnish from authenticated user to guest blogger to prevet caching of content after login.
-  // This is to solve the problem that you can't search right after login.
-  if (isset($data['ding_varnish_role'])) {
-    $data['ding_varnish_role']->value = 5; /* WAS: 2 */
   }
 }
 
@@ -182,12 +127,10 @@ function bibsdb_features_override_strongarm_alter(&$data) {
  */
 function bibsdb_features_override_views_default_views_alter(&$data) {
   if (isset($data['ding_node_search'])) {
-    $data['ding_node_search']->display['default']->display_options['filters']['type']['value']['ding_search_context_link'] = 'ding_search_context_link'; /* WAS: '' */
     $data['ding_node_search']->display['default']->display_options['filters']['type']['value']['read_circuit_set'] = 'read_circuit_set'; /* WAS: '' */
   }
 
   if (isset($data['ding_news'])) {
-
     // Change sort order of all news views
     $data['ding_news']->display['default']->display_options['sorts']['published_at'] = array(
       'id' => 'published_at',
@@ -260,10 +203,7 @@ function bibsdb_features_override_views_default_views_alter(&$data) {
     $data['ding_staff']->display['default']->display_options['pager']['options']['offset'] = 0; /* WAS: '' */
     // Make department required to avoid people in the beginning of the list not gruoped by apartment.
     $data['ding_staff']->display['ding_staff_library_departments']->display_options['relationships']['field_ding_staff_department_tid']['required'] = TRUE; /* WAS: '' */
-    
   }
-
-
 }
 
 
