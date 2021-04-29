@@ -102,22 +102,6 @@ function bibsdb_features_override_strongarm_alter(&$data) {
     $data['date_format_ding_date_only_version2']->value = 'j. F Y'; /* WAS: 'd.m.y' */
   }
 
-  // Path auto patterns
-
-  // Page pattern
-  if (isset($data['pathauto_node_ding_page_pattern'])) {
-    $data['pathauto_node_ding_page_pattern']->value = 'indhold/[node:title]'; /* WAS: '[node:menu-link:parent:url:relative]/[node:menu-link:title]' */
-  }
-
-  // Webform pattern
-  if (isset($data['pathauto_node_webform_pattern'])) {
-    $data['pathauto_node_webform_pattern']->value = '[node:title]'; 
-  }
-
-  // Event pattern
-  if (isset($data['pathauto_node_ding_event_pattern'])) {
-    $data['pathauto_node_ding_event_pattern']->value = 'arrangementer/[node:field-ding-event-category:1]/[node:title]'; 
-  }
 }
 
 /**
