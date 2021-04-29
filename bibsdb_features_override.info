@@ -1,5 +1,4 @@
 name = Bibsdb Features Override
 core = 7.x
 package = Bibsdb
-dependencies[] = features_override
 dependencies[] = publication_date
